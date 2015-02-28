@@ -13,7 +13,7 @@ class BucketsController extends Bucketlists_Controller {
 		$userId = (int) $this->route->params['userId'];
 	
 		// Get the users buckets.
-		$buckets = $bucketsModel->getBuckets($userId);
+		$buckets = $bucketsModel->getBuckets(array("user_id" => $userId));
 	
 		// Output the result.
 		$this->view->json = $buckets;
@@ -23,8 +23,13 @@ class BucketsController extends Bucketlists_Controller {
 	public function createAction () {
 		
 		// Validate the HTTP method.
-		$this->validateHttpMethod("POST");
+		$this->validateHttpMethod("GET");
 		
+		$bucketsModel = new Buckets($this->db);
+						
+		$id = $bucketsModel->add("buckets", $this->route->params);
+		
+		$this->view->json = $id;
 	}
 	
 	public function updateAction () {

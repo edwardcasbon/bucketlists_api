@@ -1,20 +1,13 @@
 <?php
-class Buckets {
+class Buckets extends Bucketlists_Model {
 	
-	protected $db;
-	
-	public function __construct($db) {
-		$this->db = $db;
-	}
-	
-	public function getBuckets ($userId) {
-		$query = "SELECT * FROM buckets";
+	protected $tableName = "buckets";
 		
-		if($userId) {
-			$query .= " WHERE user_id = {$userId}";
-		}
+	public function getBuckets ($criteria) {
+			
+		$buckets = $this->get($this->tableName, $criteria);
 		
-		return $this->db->query($query)->fetchAll();
+		return $buckets;
 	}
 	
 }

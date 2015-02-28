@@ -1,6 +1,6 @@
 <?php
 
-class ErrorController extends ApiController {
+class ErrorController extends Bucketlists_Controller {
 	
 	public function notFoundAction () {
 	}
