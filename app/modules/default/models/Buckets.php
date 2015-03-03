@@ -5,7 +5,7 @@ class Buckets extends Bucketlists_Model {
 		
 	public function getBuckets ($criteria) {
 			
-		$buckets = $this->get($this->tableName, $criteria);
+		$buckets = $this->get($criteria);
 		
 		return $buckets;
 	}

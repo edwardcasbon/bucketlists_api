@@ -27,7 +27,7 @@ class BucketsController extends Bucketlists_Controller {
 		
 		$bucketsModel = new Buckets($this->db);
 						
-		$id = $bucketsModel->add("buckets", $this->route->params);
+		$id = $bucketsModel->add($this->route->params);
 		
 		$this->view->json = $id;
 	}
@@ -36,13 +36,16 @@ class BucketsController extends Bucketlists_Controller {
 		
 		// Validate the HTTP method.
 		$this->validateHttpMethod("PUT");
-		
+
 	}
 	
 	public function deleteAction () {
 		
 		// Validate the HTTP method.
 		$this->validateHttpMethod("DELETE");
+		
+		// Remember to update the status code of the record, rather than delete 
+		// the record entirely!
 		
 	}
 	

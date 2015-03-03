@@ -1,13 +1,17 @@
 <?php
 class Bucketlists_Model {
 	protected $db;
+	protected $tableName;
 	
 	public function __construct($db) {
 						
 		$this->db = $db;
 	}
 	
-	public function get($table, Array $criteria) {
+	public function get(Array $criteria, $table) {
+		
+		// Set the table to act upon.
+		$table = $this->_setTable($table);
 		
 		// Start of the SQL statement.
 		$sql = "SELECT * FROM {$table}";
@@ -24,7 +28,10 @@ class Bucketlists_Model {
 		return $this->db->query($sql)->fetchAll();
 	}
 	
-	public function add($table, Array $data) {
+	public function add(Array $data, $table) {
+		
+		// Set the table to act upon.
+		$table = $this->_setTable($table);
 				
 		$keys = [];
 		$values = [];
@@ -48,13 +55,19 @@ class Bucketlists_Model {
 		$sql = "INSERT INTO " . $table . " (" . $sqlKeys . ") VALUES (" . $sqlValues . ");";
 				
 		// Execute the insert statement.
-		$this->db->query($sql);
+		$this->db->exec($sql);
 		
-		// Return the ID.
-		return $this->db->lastInsertId();
+		// Get the ID.
+		$id = $this->db->lastInsertId();
+		
+		// Return the new record.
+		return $this->get($table, array("id" => $id));
 	}
 	
-	public function update($table, Array $data, Array $criteria) {
+	public function update(Array $data, Array $criteria, $table) {
+		
+		// Set the table to act upon.
+		$table = $this->_setTable($table);
 		
 		// Start of the statement.
 		$sql = "UPDATE {$table} SET ";
@@ -62,19 +75,39 @@ class Bucketlists_Model {
 		// Build the updates part of the statement.
 		$updates = array();
 		foreach($data as $key => $value) {
-			$updates[] = $this->db->quote($key) . " = " . $this->db->quote($value);
+			$updates[] = "`" . $key . "` = " . $this->db->quote($value);
 		}
-		$sql .= implode(" AND ", $updates);
+		$sql .= implode(", ", $updates);
+		
+		// Update the updated timestamp.
+		$sql .= ", `updated_datetime` = NOW()";
 		
 		// Build the where part of the statement.
 		$sql .= $this->_buildWhere($criteria);
 		
-		// Execute the query and return the results.
-		return $this->db->query($sql)->fetchAll();
+		// Execute the update query.
+		$this->db->exec($sql);
+		
+		// Return the record.
+		return $this->get($criteria, $table);
 	}
 		
-	public function delete($table, Array $criteria) {
-		// @TODO Finish this!
+	public function delete(Array $criteria, $table) {
+
+		// Set the table to act upon.
+		$table = $this->_setTable($table);
+
+		// Start of the statement
+		$sql = "DELETE FROM {$table}";
+		
+		// Build the where part of the statement.
+		$sql .= $this->_buildWhere($criteria);
+		
+		// Execute the query.
+		$rows = $this->db->exec($sql);
+		
+		// Return the number of rows deleted.
+		return $rows;
 	}
 	
 	public function objectify(Array $array) {
@@ -100,5 +133,12 @@ class Bucketlists_Model {
 		$sql .= implode(" AND ", $conditions);
 		
 		return $sql;
+	}
+	
+	protected function _setTable($table) {
+		if(isset($table)) {
+			return $table;
+		}
+		return $this->tableName;
 	}
 }
