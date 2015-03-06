@@ -13,6 +13,8 @@ class TagsController extends Bucketlists_Controller {
 		// Validate the HTTP method.
 		$this->validateHttpMethod("POST");
 		
+		// NOTE: Check if a tag exists before creating one. If exists, return the ID/record.
+		
 	}
 	
 	public function updateAction () {
@@ -26,6 +28,9 @@ class TagsController extends Bucketlists_Controller {
 		
 		// Validate the HTTP method.
 		$this->validateHttpMethod("DELETE");
+		
+		// Remember to update the status code of the record, rather than delete 
+		// the record entirely!
 		
 	}
 	

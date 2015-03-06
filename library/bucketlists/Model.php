@@ -1,10 +1,10 @@
 <?php
 class Bucketlists_Model {
 	protected $db;
+	
 	protected $tableName;
 	
-	public function __construct($db) {
-						
+	public function __construct($db) {					
 		$this->db = $db;
 	}
 	
@@ -123,15 +123,19 @@ class Bucketlists_Model {
 			return false;
 		}
 		
+		// Start of the WHERE part of the statement.
 		$sql .= " WHERE ";
 		
+		// Loop through the criteria array, building up the conditions.
 		$conditions = array();
 		foreach($criteria as $key => $value) {
 			$conditions[] = $key . " = " . $this->db->quote($value);
 		}
 		
+		// Implode the conditions array to build the where string.
 		$sql .= implode(" AND ", $conditions);
 		
+		// Return the built string.
 		return $sql;
 	}
 	

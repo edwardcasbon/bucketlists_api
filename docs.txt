@@ -1,0 +1,119 @@
+Bucketlists API
+
+Objects:
+	Attachments
+	Buckets
+	Items
+	Tags
+	Users
+
+--------------------------------------------------------
+
+Attachments
+	
+	/attachments/
+		id
+		itemId
+
+	/attachments/create
+		itemId
+		type (note/image/URL)
+		value
+		
+	/attachments/update
+		id
+		type
+		value
+		
+	/attachments/delete
+		id
+		
+--------------------------------------------------------
+
+Buckets
+
+	/buckets/
+		id
+		userId
+		
+	/buckets/create
+		userId
+		label
+		
+	/buckets/update
+		id
+		label
+		
+	/buckets/delete
+		id
+		
+--------------------------------------------------------
+
+Items
+
+	/items/
+		id
+		bucketId
+		tagId (Filter items based on tag)
+		
+	/items/create
+		bucketId
+		label
+		
+	/items/update
+		id
+		label
+		
+	/items/delete
+		id
+		
+--------------------------------------------------------
+
+Tags
+
+	/tags/
+		id
+		itemId
+		bucketId
+		
+	/tags/create
+		label
+		itemId (Int or Array of item Ids to apply tag to)
+		
+	/tags/update
+		id
+		label
+		
+	/tags/delete
+		id
+		itemId (If item ID passed in, then remove the tag_items record, else remote the tag record)
+		
+--------------------------------------------------------
+
+Users
+	
+	/users/
+		id
+		
+	/users/create
+		emailAddress
+		username
+		password
+		forename
+		surname
+		dob
+		
+	/users/update
+		id
+		emailAddress
+		username
+		password
+		forename
+		surname
+		dob
+		lastLogin
+		
+	/users/delete
+		id
+		
+--------------------------------------------------------

@@ -27,6 +27,9 @@ class AttachmentsController extends Bucketlists_Controller {
 		// Validate the HTTP method.
 		$this->validateHttpMethod("DELETE");
 		
+		// Remember to update the status code of the record, rather than delete 
+		// the record entirely!
+		
 	}
 	
 }
