@@ -39,6 +39,9 @@ class Bucketlists_Model {
 		// Set the status.
 		$data["status"] = 1;
 		
+		// Set the created datetime.
+		$data["created_datetime"] = date("Y-m-d H:i:s");
+		
 		// Loop through the data separating the keys and values.
 		foreach($data as $key => $value) {
 			$keys[] = $key;
