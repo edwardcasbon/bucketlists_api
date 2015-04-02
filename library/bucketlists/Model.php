@@ -61,7 +61,7 @@ class Bucketlists_Model {
 		$id = $this->db->lastInsertId();
 		
 		// Return the new record.
-		return $this->get($table, array("id" => $id));
+		return $this->get(array("id" => $id));
 	}
 	
 	public function update(Array $data, Array $criteria, $table) {
