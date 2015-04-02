@@ -63,4 +63,19 @@ class Bucketlists_Controller extends Simps_Controller {
 		return $values;
 	}
 	
+	public function getExpectedParams ($params) {
+		if(count($params) === 0) {
+			return array();
+		}
+		
+		$params = $this->getValuesFromArray($this->route->params, $params);
+		
+		if(count($params) === 0) {
+			// None of the expected params have been passed in, throw back an error.
+			throw new Simps_Exception("Missing expected parameters.", 405);
+		}
+		
+		return $params;
+	}
+	
 }
