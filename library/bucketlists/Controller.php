@@ -33,4 +33,34 @@ class Bucketlists_Controller extends Simps_Controller {
 		}
 	}
 	
+	public function format ($array) {
+							
+		if (count($array) === 0) {
+			return array();
+		}
+		
+		$formatted = array();
+		
+		foreach($array as $key => $value) {
+			// Format the key from camelCase to camel_case.
+			$key = strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $key));
+			$formatted[$key] = $value;
+		}
+		
+		return $formatted;
+	}
+	
+	// Return only the requested keys from the array.
+	public function getValuesFromArray ($array, $keys) {	
+		$values = array();
+			
+		foreach($keys as $key) {
+			if(array_key_exists($key, $array)) {
+				$values[$key] = $array[$key];
+			}
+		}
+			
+		return $values;
+	}
+	
 }
