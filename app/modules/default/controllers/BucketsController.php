@@ -1,52 +1,98 @@
 <?php
 class BucketsController extends Bucketlists_Controller {
-	
+
+	public function __construct ($route) {
+
+		// Call the Bucketlists constructor.
+		parent::__construct($route);
+
+		// Create an instance of the model.
+		$this->bucketsModel = new Buckets($this->db);
+	}
+
 	public function indexAction () {
 
 		// Validate the HTTP method.
 		$this->validateHttpMethod("GET");
 
-		// Get the buckets DB model.
-		$bucketsModel = new Buckets($this->db);
-	
-		// Get the user ID from the request.
-		$userId = (int) $this->route->params['userId'];
-	
-		// Get the users buckets.
-		$buckets = $bucketsModel->getBuckets(array("user_id" => $userId));
-	
-		// Output the result.
+		// Expected / Allowed params.
+		$expectedParams = array(
+			"id",
+			"itemId"
+		);
+
+		// Get the params
+		$params = $this->getExpectedParams($expectedParams);
+
+		// Get the buckets.
+		$buckets = $this->bucketsModel->get($this->format($params));
+
+		// Output the buckets.
 		$this->view->json = $buckets;
-			
 	}
-	
+
 	public function createAction () {
-		
+
 		// Validate the HTTP method.
-		$this->validateHttpMethod("GET");
-		
-		$bucketsModel = new Buckets($this->db);
-						
-		$id = $bucketsModel->add($this->route->params);
-		
-		$this->view->json = $id;
+		$this->validateHttpMethod("POST");
+
+		// Format the params.
+		$params = $this->format($this->route->params);
+
+		// Create the attachment.
+		$attachment = $this->bucketsModel->add($params);
+
+		// Output the attachment.
+		$this->view->json = $attachment;
 	}
-	
+
 	public function updateAction () {
-		
+
 		// Validate the HTTP method.
 		$this->validateHttpMethod("PUT");
 
+		// Expected / Allowed params.
+		$expectedParams = array(
+			"id"
+		);
+
+		// Get the expected params.
+		$this->getExpectedParams($expectedParams);
+
+		// Get the params.
+		$params = $this->format($this->route->params);
+
+		// Get the criteria (ID).
+		$criteria = array("id" => $params["id"]);
+
+		// Get the data, by removing the ID.
+		unset($params["id"]);
+
+		// Update the attachment.
+		$attachment = $this->bucketsModel->update($params, $criteria);
+
+		// Output the updated attachment.
+		$this->view->json = $attachment;
 	}
-	
+
 	public function deleteAction () {
-		
+
 		// Validate the HTTP method.
 		$this->validateHttpMethod("DELETE");
-		
-		// Remember to update the status code of the record, rather than delete 
-		// the record entirely!
-		
+
+		// Expected / Allowed params.
+		$expectedParams = array(
+			"id"
+		);
+
+		// Get the expected params.
+		$params = $this->getExpectedParams($expectedParams);
+
+		// Update the buckets status code, rather than delete it completely.
+		$attachment = $this->bucketsModel->update(array("status" => 0), array("id" => $params["id"]));
+
+		// Output the updated attachment.
+		$this->view->json = $attachment;
 	}
-	
+
 }
