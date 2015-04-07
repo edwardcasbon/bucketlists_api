@@ -39,11 +39,11 @@ class BucketsController extends Bucketlists_Controller {
 		// Format the params.
 		$params = $this->format($this->route->params);
 
-		// Create the attachment.
-		$attachment = $this->bucketsModel->add($params);
+		// Create the bucket.
+		$bucket = $this->bucketsModel->add($params);
 
-		// Output the attachment.
-		$this->view->json = $attachment;
+		// Output the bucket.
+		$this->view->json = $bucket;
 	}
 
 	public function updateAction () {
@@ -68,11 +68,11 @@ class BucketsController extends Bucketlists_Controller {
 		// Get the data, by removing the ID.
 		unset($params["id"]);
 
-		// Update the attachment.
-		$attachment = $this->bucketsModel->update($params, $criteria);
+		// Update the bucket.
+		$bucket = $this->bucketsModel->update($params, $criteria);
 
-		// Output the updated attachment.
-		$this->view->json = $attachment;
+		// Output the updated bucket.
+		$this->view->json = $bucket;
 	}
 
 	public function deleteAction () {
@@ -89,10 +89,10 @@ class BucketsController extends Bucketlists_Controller {
 		$params = $this->getExpectedParams($expectedParams);
 
 		// Update the buckets status code, rather than delete it completely.
-		$attachment = $this->bucketsModel->update(array("status" => 0), array("id" => $params["id"]));
+		$bucket = $this->bucketsModel->update(array("status" => 0), array("id" => $params["id"]));
 
-		// Output the updated attachment.
-		$this->view->json = $attachment;
+		// Output the updated bucket.
+		$this->view->json = $bucket;
 	}
 
 }
