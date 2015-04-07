@@ -15,8 +15,8 @@ $modules = array('default');
 $GLOBALS['modules'] = $modules;
 
 // Set the include path to include Simps library and app controllers and models.
-$paths =	dirname(dirname(__FILE__)) . "/app" . PATH_SEPARATOR . 	
-			dirname(dirname(__FILE__)) . "/library" . PATH_SEPARATOR . 
+$paths =	dirname(dirname(__FILE__)) . "/app" . PATH_SEPARATOR .
+			dirname(dirname(__FILE__)) . "/library" . PATH_SEPARATOR .
 			dirname(dirname(__FILE__)) . "/app/modules" . PATH_SEPARATOR;
 set_include_path(get_include_path() . PATH_SEPARATOR . $paths);
 
