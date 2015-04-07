@@ -18,7 +18,7 @@ class BucketsController extends Bucketlists_Controller {
 		// Expected / Allowed params.
 		$expectedParams = array(
 			"id",
-			"itemId"
+			"userId"
 		);
 
 		// Get the params
