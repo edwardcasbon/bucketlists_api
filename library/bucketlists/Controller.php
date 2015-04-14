@@ -19,6 +19,9 @@ class Bucketlists_Controller extends Simps_Controller {
 		// Set the header to serve json
 		header("Content-type: application/json");
 		
+		// Set the access control header
+		header("Access-Control-Allow-Origin: *");
+		
 		// echo the json
 		echo json_encode($this->view->json);
 	}
@@ -29,7 +32,7 @@ class Bucketlists_Controller extends Simps_Controller {
 
 			// Not a valid request method, return error.
 			unset($this->view->json);
-			throw new Simps_Exception("Not a valid HTTP method for this API endpoint.", 405);
+			throw new Bucketlists_Exception("Not a valid HTTP method for this API endpoint.", 405);
 		}
 	}
 	
