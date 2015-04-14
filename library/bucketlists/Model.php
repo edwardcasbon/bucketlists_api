@@ -24,8 +24,16 @@ class Bucketlists_Model {
 		// If there's criteria, then build the SQL statement.
 		$sql .= $this->_buildWhere($criteria);
 
-		// Execute the query and return the results.
-		return $this->db->query($sql)->fetchAll();
+		// Execute the query and get the results.
+		$results = $this->db->query($sql)->fetchAll();
+		
+		// If the ID's in the criteria, then only return the single result.
+		if(array_key_exists("id", $criteria)) {
+			return $results[0];
+		}
+		
+		// else, return all of the results.
+		return $results;
 	}
 
 	public function add(Array $data, $table) {
